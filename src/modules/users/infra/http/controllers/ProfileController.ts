@@ -30,6 +30,8 @@ export default class ProfileController {
       password,
     });
 
+    console.log(user);
+
     delete user.password;
 
     return response.json(user);
