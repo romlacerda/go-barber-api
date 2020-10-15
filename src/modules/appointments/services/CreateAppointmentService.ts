@@ -24,6 +24,7 @@ class CreateAppointmentService {
   //
 
   public async execute({ provider_id, user_id, date }: IRequest): Promise<Appointment> {
+    console.log(provider_id, user_id, date);
 
     const appointmentDate = startOfHour(date);
 
@@ -53,7 +54,7 @@ class CreateAppointmentService {
       date: appointmentDate,
     });
 
-    const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm");
+    const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
 
     await this.notificationsRepository.create({
       recipient_id: provider_id,
