@@ -2,6 +2,7 @@ import { injectable, inject } from 'tsyringe';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 
 interface IRequest {
   provider_id: string;
@@ -28,11 +29,9 @@ class ListProviderAppointmentsService {
     if (!appointments) {
       appointments = await this.appointmentsRepository.findAllInDayFromProvider({ provider_id, day, month, year });
 
-      console.log('busquei');
-
       await this.cacheProvider.save(
         cacheKey,
-        appointments
+        classToClass(appointments),
       );
     }
 
